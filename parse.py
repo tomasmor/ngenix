@@ -1,5 +1,4 @@
 import xml.etree.ElementTree as ET
-import os
 import zipfile
 import csv
 from contextlib import closing
@@ -25,10 +24,10 @@ def parse_xml(xml):
 
 def extract_xml(path_to_zip):
     result = {"levels":[], "objects":[]}
-    with zipfile.ZipFile(path_to_zip, "r") as zf:
-        file_list = zf.namelist()
-        for f in file_list:
-            with zf.open(f, "r") as xml:
+    with zipfile.ZipFile(path_to_zip, "r") as zipfilefhandler:
+        file_list = zipfilefhandler.namelist()
+        for filename in file_list:
+            with zipfilefhandler.open(filename, "r") as xml:
                 parsed_data = parse_xml(xml.read())
                 result["levels"].append(parsed_data["id"] +" "+ parsed_data["level"])
                 for obj in parsed_data["objects"]:
@@ -38,7 +37,7 @@ def extract_xml(path_to_zip):
 def write_to_csv(csv_path, data):
     with open(csv_path, "ab") as csvf:
         writer = csv.writer(csvf, delimiter=' ',
-                        quoting=csv.QUOTE_NONE, escapechar="|")
+                            quoting=csv.QUOTE_NONE, escapechar="|")
         writer.writerows(data)
 
 def multiprocessed_parsing(all_zips):
