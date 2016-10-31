@@ -8,7 +8,7 @@ import zipfile
 import tempfile
 
 from consts import ROOT_PATH, ZIP_DIR, NUMBER_XMLS_IN_FOLDER
-from log import logger
+
 def random_string(len):
     return "".join(random.choice(string.uppercase + string.lowercase)
     for i in range(len))

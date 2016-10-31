@@ -12,7 +12,7 @@ if __name__ == "__main__":
     for i in range(NUMBER_OF_ZIPS):
         zipname = str(i) + ".zip"
         zip_folder_path = create_zip(zipname)
-    logger.info("All zips will be stored in", zip_folder_path)
+    logger.info("All zips will be stored in {}".format(zip_folder_path))
     all_zips = []
     for zipname in os.listdir(zip_folder_path):
         if zipname.endswith(".zip"):
@@ -27,7 +27,7 @@ if __name__ == "__main__":
     if os.path.isfile(OBJECTS_CSV_NAME):
         os.remove(OBJECTS_CSV_NAME)
 
+    logger.info("Writing to csv {} and {}".format(LEVELS_CSV_NAME, OBJECTS_CSV_NAME))
     for result in results:
-
         write_to_csv(LEVELS_CSV_NAME, result["levels"])
         write_to_csv(OBJECTS_CSV_NAME, result["objects"])

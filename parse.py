@@ -25,7 +25,6 @@ def parse_xml(xml):
 
 def extract_xml(path_to_zip):
     result = {"levels":[], "objects":[]}
-    logger.info("Go thru all xmls and get needed information")
     with zipfile.ZipFile(path_to_zip, "r") as zf:
         file_list = zf.namelist()
         for f in file_list:
@@ -37,7 +36,6 @@ def extract_xml(path_to_zip):
     return result
 
 def write_to_csv(csv_path, data):
-    logger.info("Writing to csv", csv_path)
     with open(csv_path, "ab") as csvf:
         writer = csv.writer(csvf, delimiter=' ',
                         quoting=csv.QUOTE_NONE, escapechar="|")
