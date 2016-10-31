@@ -34,7 +34,6 @@ def create_xml():
 
 def create_zip(zipname):
     zip_folder_path = os.path.join(tempfile.gettempdir(), ZIP_DIR)
-    logger.info("All zips will be stored in", zip_folder_path)
     if not os.path.exists(zip_folder_path):
         os.mkdir(zip_folder_path)
     path = os.path.join(zip_folder_path, zipname)
