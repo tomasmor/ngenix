@@ -11,11 +11,13 @@ if __name__ == "__main__":
 
     for i in range(NUMBER_OF_ZIPS):
         zipname = str(i) + ".zip"
-        create_zip(zipname)
+        zip_folder_path = create_zip(zipname)
+    logger.info("All zips will be stored in", zip_folder_path)
     all_zips = []
-    for zipname in os.listdir(os.path.join(ROOT_PATH, ZIP_DIR)):
+    for zipname in os.listdir(zip_folder_path):
         if zipname.endswith(".zip"):
-            all_zips.append(os.path.join(ROOT_PATH, ZIP_DIR, zipname))
+            all_zips.append(os.path.join(zip_folder_path, zipname))
+
 
     results = multiprocessed_parsing(all_zips)
 
@@ -26,5 +28,6 @@ if __name__ == "__main__":
         os.remove(OBJECTS_CSV_NAME)
 
     for result in results:
+
         write_to_csv(LEVELS_CSV_NAME, result["levels"])
         write_to_csv(OBJECTS_CSV_NAME, result["objects"])

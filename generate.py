@@ -5,8 +5,10 @@ import random
 import string
 import os
 import zipfile
+import tempfile
 
 from consts import ROOT_PATH, ZIP_DIR, NUMBER_XMLS_IN_FOLDER
+from log import logger
 def random_string(len):
     return "".join(random.choice(string.uppercase + string.lowercase)
     for i in range(len))
@@ -31,13 +33,15 @@ def create_xml():
     return ET.tostring(root, "utf-8")
 
 def create_zip(zipname):
-    zip_folder_path = os.path.join(ROOT_PATH, ZIP_DIR)
+    zip_folder_path = os.path.join(tempfile.gettempdir(), ZIP_DIR)
+    logger.info("All zips will be stored in", zip_folder_path)
     if not os.path.exists(zip_folder_path):
         os.mkdir(zip_folder_path)
-    path = os.path.join(ROOT_PATH, ZIP_DIR, zipname)
+    path = os.path.join(zip_folder_path, zipname)
 
     with zipfile.ZipFile(path, "w") as zf:
         for i in range(NUMBER_XMLS_IN_FOLDER):
             filename = str(i) + ".xml"
             xml = create_xml()
             zf.writestr(filename, xml)
+    return zip_folder_path
